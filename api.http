@@ -1,0 +1,42 @@
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "name": "Admin",
+    "email": "admin@user.com",
+    "password": "admin",
+    "role": "ADMIN"
+}
+###
+GET http://localhost:3000/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQHVzZXIuY29tIiwicm9sZSI6IkFETUlOIiwic3ViIjoiY205MThmaGpwMDAwMHV4YjBjdTRvaHhrZSIsImlhdCI6MTc0Mzc4Mzg2NywiZXhwIjoxNzQzNzkxMDY3fQ.x9vZLonyUQCZn8tdHK3vqNH0fnjec6pYwQ-riP4_XIg
+###
+GET http://localhost:3000/users/cm918fhjp0000uxb0cu4ohxke
+
+###
+# @name adminLogin
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "email": "admin@user.com",
+    "password": "admin"
+}
+
+###
+@tokenAdmin = {{ adminLogin.response.body.access_token }} 
+###
+
+POST http://localhost:3000/post
+Content-Type: application/json
+Authorization: Bearer {{tokenAdmin}}
+{
+    "title": "My first post",
+    "content": "This is the content of my first post.",
+    "published": true
+}
+
+###
+GET http://localhost:3000/post
+Authorization: Bearer {{tokenAdmin}}
+###
