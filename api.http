@@ -1,5 +1,6 @@
 POST http://localhost:3000/users
 Content-Type: application/json
+Authorization: Bearer {{tokenAdmin}}
 
 {
     "name": "Admin",
@@ -8,8 +9,41 @@ Content-Type: application/json
     "role": "ADMIN"
 }
 ###
+POST http://localhost:3000/users
+Content-Type: application/json
+Authorization: Bearer {{tokenAdmin}}
+
+{
+    "name": "Reader",
+    "email": "reader@user.com",
+    "password": "admin",
+    "role": "READER"
+}
+###
+POST http://localhost:3000/users
+Content-Type: application/json
+Authorization: Bearer {{tokenAdmin}}
+
+{
+    "name": "Writer",
+    "email": "writer@user.com",
+    "password": "admin",
+    "role": "WRITER"
+}
+
+###
+POST http://localhost:3000/users
+Content-Type: application/json
+Authorization: Bearer {{tokenRead}}
+{
+    "name": "Editor",
+    "email": "editor@user.com",
+    "password": "admin",
+    "role": "EDITOR"
+}
+###
 GET http://localhost:3000/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiQWRtaW4iLCJlbWFpbCI6ImFkbWluQHVzZXIuY29tIiwicm9sZSI6IkFETUlOIiwic3ViIjoiY205MThmaGpwMDAwMHV4YjBjdTRvaHhrZSIsImlhdCI6MTc0Mzc4Mzg2NywiZXhwIjoxNzQzNzkxMDY3fQ.x9vZLonyUQCZn8tdHK3vqNH0fnjec6pYwQ-riP4_XIg
+Authorization: Bearer {{tokenAdmin}}
 ###
 GET http://localhost:3000/users/cm918fhjp0000uxb0cu4ohxke
 
@@ -25,6 +59,18 @@ Content-Type: application/json
 
 ###
 @tokenAdmin = {{ adminLogin.response.body.access_token }} 
+###
+# @name readLogin
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "email": "reader@user.com",
+    "password": "admin"
+}
+
+###
+@tokenRead = {{ readLogin.response.body.access_token }} 
 ###
 
 POST http://localhost:3000/post
